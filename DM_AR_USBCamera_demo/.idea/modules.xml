@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/glasssensor/glasssensor.iml" filepath="$PROJECT_DIR$/glasssensor/glasssensor.iml" />
       <module fileurl="file://$PROJECT_DIR$/libuvccamera/libuvccamera.iml" filepath="$PROJECT_DIR$/libuvccamera/libuvccamera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opencv3/opencv3.iml" filepath="$PROJECT_DIR$/opencv3/opencv3.iml" />
     </modules>
   </component>
 </project>

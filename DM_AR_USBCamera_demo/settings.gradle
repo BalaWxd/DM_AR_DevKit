@@ -1,1 +1,1 @@
-include ':app', ':libuvccamera', ':glasssensor'
+include ':app', ':libuvccamera', ':glasssensor', ':opencv3'

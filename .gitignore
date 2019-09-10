@@ -1,0 +1,5 @@
+.idea
+tags.*
+.externalNativeBuild
+.gradle
+.DS_Store
