@@ -1,5 +1,7 @@
 .idea
 tags.*
+tags
 .externalNativeBuild
 .gradle
 .DS_Store
+build/
