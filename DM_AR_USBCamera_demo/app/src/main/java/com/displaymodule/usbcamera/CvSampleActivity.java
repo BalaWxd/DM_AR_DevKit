@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements CvCameraViewListener2 {
+public class CvSampleActivity extends AppCompatActivity implements CvCameraViewListener2 {
 
     // static {
     //     OpenCVLoader.initDebug();
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements CvCameraViewListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cvsample);
 
         // Set up camera listener.
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.CameraView);

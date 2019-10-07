@@ -33,6 +33,7 @@ import org.opencv.android.FpsMeter;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -47,9 +48,6 @@ import java.io.IOException;
 
 /**
  * The activity demonstrate the use of OpenCV with USBCamera.
- *
- *
- *
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -290,9 +288,31 @@ public class MainActivity extends AppCompatActivity {
 
     private final USBCameraListener mUSBCameraListener = new USBCameraListener() {
 
+        /**
+         * The handler is called after USB camera connected, with a sequence of below:
+         *
+         * 1. Calls onConnected callback
+         * 2. Open camera (USBCamera.openCamera)
+         * 3. onCameraOpened
+         *
+         * USBCameraHelper::ConnectCallback
+         *  => onConnected
+         *  => openCamera
+         *  => onCameraOpened
+         *
+         * USBCameraListener
+         *  => onCameraOpened
+         *
+         * @param camera
+         * @param cameraId camera ID (not used right now)
+         * @param displayOrientation preview rotation
+         * @param isMirror display mirror or not
+         */
         @Override
         public void onCameraOpened(USBCamera camera, int cameraId, int displayOrientation, boolean isMirror) {
             Log.i(TAG, "onCameraOpened");
+
+            prepare(camera);
 
             // Getting the frames and draw frames
             runThreadOfCameraWorker();
@@ -320,6 +340,31 @@ public class MainActivity extends AppCompatActivity {
         public void onCameraConfigurationChanged(int cameraID, int displayOrientation) {
             Log.i(TAG, "onCameraConfigurationChanged");
             //todo something
+        }
+
+        private void prepare(USBCamera camera) {
+            Log.d(TAG, "Prepare frame parameters.");
+            com.displaymodule.libuvccamera.Size previewSize = camera.getPreviewSize();
+
+            mFrameWidth = previewSize.width;
+            mFrameHeight = previewSize.height;
+
+            // int size = mFrameWidth * mFrameHeight;
+
+            if (mFpsMeter != null) {
+                mFpsMeter.setResolution(mFrameWidth, mFrameHeight);
+            }
+
+            mFrameChain = new Mat[2];
+            mFrameChain[0] = new Mat(mFrameHeight + (mFrameHeight/2), mFrameWidth, CvType.CV_8UC1);
+            mFrameChain[1] = new Mat(mFrameHeight + (mFrameHeight/2), mFrameWidth, CvType.CV_8UC1);
+
+            mCameraFrame = new UsbCameraFrame[2];
+            mCameraFrame[0] = new UsbCameraFrame(mFrameChain[0], mFrameWidth, mFrameHeight);
+            mCameraFrame[1] = new UsbCameraFrame(mFrameChain[1], mFrameWidth, mFrameHeight);
+
+            mCameraFrameReady = false;
+            mPreviewFormat = ImageFormat.NV21;
         }
 
         /**
@@ -519,6 +564,7 @@ public class MainActivity extends AppCompatActivity {
             show();
         }
     }
+
     private void hide() {
         // Hide UI first
         ActionBar actionBar = getSupportActionBar();
