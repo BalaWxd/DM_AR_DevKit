@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.displaymodule.libuvccamera.Size;
 import com.displaymodule.usbcamera.utils.camera.USBCamera;
 import com.displaymodule.usbcamera.utils.camera.USBCameraHelper;
 import com.displaymodule.usbcamera.utils.camera.USBCameraListener;
@@ -50,10 +49,13 @@ public class PreviewActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+
     private final Handler mHideHandler = new Handler();
 
     private USBCameraHelper usbcameraHelper;
-//    private Size previewSize;
+
+    // private Size previewSize;
+
     private View mPreviewView;
 
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
@@ -63,7 +65,6 @@ public class PreviewActivity extends AppCompatActivity {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -82,7 +83,9 @@ public class PreviewActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
+
     private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -94,13 +97,16 @@ public class PreviewActivity extends AppCompatActivity {
             mControlsView.setVisibility(View.VISIBLE);
         }
     };
+
     private boolean mVisible;
+
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
             hide();
         }
     };
+
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -126,7 +132,6 @@ public class PreviewActivity extends AppCompatActivity {
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mPreviewView = findViewById(R.id.texture_preview);
-
 
         // Set up the user interaction to manually show or hide the system UI.
         mPreviewView.setOnClickListener(new View.OnClickListener() {
@@ -171,20 +176,17 @@ public class PreviewActivity extends AppCompatActivity {
             @Override
             public void onCameraOpened(USBCamera camera, int cameraId, int displayOrientation, boolean isMirror) {
                 Log.i(TAG, "onCameraOpened");
-//                previewSize = camera.getPreviewSize();
+                // Size previewSize = camera.getPreviewSize();
             }
 
             @Override
             public void onPreview(byte[] data) {
                 Log.i(TAG, "onPreview");
-                //todo something
             }
 
             @Override
             public void onCameraClosed() {
                 Log.i(TAG, "onCameraClosed");
-                //todo something
-
             }
 
             @Override
